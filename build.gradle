@@ -7,35 +7,36 @@ plugins {
 }
 
 
-group 'io.xiaxiayige.plugin'
-version '0.0.1-SNAPSHOT'
+group 'io.github.xiaxiayige'
+version '1.0.0'
 
-//pluginBundle {
-//    website = '<substitute your project website>'
-//    vcsUrl = '<uri to project source repository>'
-//    tags = ['tags', 'for', 'your', 'plugins']
+pluginBundle {
+    website = 'https://github.com/xiaxiayige'
+    vcsUrl = 'https://github.com/xiaxiayige/androidManifestPermissionChecker'
+    tags = ['0.0.1']
+}
+
 //
+//publishing {
+//    repositories {
+//        maven {
+//            name = 'localPluginRepository'
+//            url = 'D:/plugin'
+//        }
+//    }
 //}
 
 gradlePlugin {
     plugins {
-        greetingsPlugin {
-            id = 'io.xiaxiayige.plugin.android.test'
-            displayName = 'AndroidPlugin'
-            description = 'test pluginn description'
-            implementationClass = 'com.xiaxiayige.plugin.AndroidPlugin'
+        create("verifyManifestPermission") {
+            id = "${group}.plugin.verifyManifest"
+            displayName = 'VerifyManifestPermissionPlugin'
+            description = ' check mainfeest is exist blackPermissions'
+            implementationClass = 'com.xiaxiayige.plugin.VerifyManifestPermissionPlugin'
         }
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = 'localPluginRepository'
-            url = 'D:/plugin'
-        }
-    }
-}
 
 repositories {
     mavenCentral()
