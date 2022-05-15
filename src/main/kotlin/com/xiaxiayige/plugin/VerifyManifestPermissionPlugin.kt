@@ -6,7 +6,13 @@ import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-class AndroidPlugin : Plugin<Project> {
+/**
+ * @description: 验证Manifest权限插件
+ * @author : xiaxiayige@163.com
+ * @date: 2022/5/14
+ * @version: 1.0.0
+ */
+class VerifyManifestPermissionPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         createExtensions(project)

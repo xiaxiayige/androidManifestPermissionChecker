@@ -6,7 +6,7 @@ package com.xiaxiayige.plugin
  * @date: 2022/5/10
  * @version: 1.0.0
  */
-open class VerifyManifestPermission {
+open class VerifyManifestPermissionExtensions {
 
     companion object {
         const val EXTENSIONS_NAME = "verifyManifestPermission"
@@ -15,7 +15,7 @@ open class VerifyManifestPermission {
     /**
      * 黑名单权限列表
      */
-    var blackPermissionList = ArrayList<String>()
+    var blackPermissionList = arrayListOf<String>()
 
     /**
      * 构建类型
