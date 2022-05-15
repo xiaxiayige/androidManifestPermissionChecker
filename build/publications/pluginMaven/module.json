@@ -1,0 +1,101 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.xiaxiayige.plugin",
+    "module": "AndroidPlugin_PermissionnCheck",
+    "version": "0.0.1-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "AndroidPlugin_PermissionnCheck-0.0.1-SNAPSHOT.jar",
+          "url": "AndroidPlugin_PermissionnCheck-0.0.1-SNAPSHOT.jar",
+          "size": 23207,
+          "sha512": "b58dcca467abd3659133e370565b69415d365556fc69ad80737daea83d836153e7ebf6b9fe41659787241766ae1026a19e55a679823245679eb6b9904de1d41e",
+          "sha256": "3abd29cb2a987c62787c905f720019aadbf216d3844081c6975096c327edbe20",
+          "sha1": "fb06e633b4cfd8b795110ddeaa9f881d599e07ce",
+          "md5": "17ebf262526a73682a5b313db28f8dec"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.6.21"
+          }
+        },
+        {
+          "group": "com.android.tools.build",
+          "module": "gradle",
+          "version": {
+            "requires": "4.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin",
+          "version": {
+            "requires": "1.6.21"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.6.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-compiler-embeddable",
+          "version": {
+            "requires": "1.6.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "AndroidPlugin_PermissionnCheck-0.0.1-SNAPSHOT.jar",
+          "url": "AndroidPlugin_PermissionnCheck-0.0.1-SNAPSHOT.jar",
+          "size": 23207,
+          "sha512": "b58dcca467abd3659133e370565b69415d365556fc69ad80737daea83d836153e7ebf6b9fe41659787241766ae1026a19e55a679823245679eb6b9904de1d41e",
+          "sha256": "3abd29cb2a987c62787c905f720019aadbf216d3844081c6975096c327edbe20",
+          "sha1": "fb06e633b4cfd8b795110ddeaa9f881d599e07ce",
+          "md5": "17ebf262526a73682a5b313db28f8dec"
+        }
+      ]
+    }
+  ]
+}

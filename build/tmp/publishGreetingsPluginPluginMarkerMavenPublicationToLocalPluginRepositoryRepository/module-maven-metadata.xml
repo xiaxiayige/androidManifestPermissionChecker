@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>io.xiaxiayige.plugin.android.test</groupId>
+  <artifactId>io.xiaxiayige.plugin.android.test.gradle.plugin</artifactId>
+  <versioning>
+    <latest>0.0.1-SNAPSHOT</latest>
+    <versions>
+      <version>0.0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20220514102722</lastUpdated>
+  </versioning>
+</metadata>
