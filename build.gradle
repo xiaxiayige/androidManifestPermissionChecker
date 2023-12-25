@@ -1,14 +1,15 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.7.22"
+    id "org.jetbrains.kotlin.jvm" version "1.7.20"
     id 'java'
     id 'java-gradle-plugin'
     id 'maven-publish'
     id "com.gradle.plugin-publish" version "1.2.1"
 }
 
+sourceCompatibility = 11
 
 group 'io.github.xiaxiayige'
-version '1.0.0'
+version '1.0.1-SNAPSHOT'
 
 publishing {
     repositories {
@@ -19,6 +20,16 @@ publishing {
     }
 }
 
+//kotlin {
+//    jvmToolchain {
+//        languageVersion.set(JavaLanguageVersion.of("11">))
+//    }
+//    // Or shorter:
+////    jvmToolchain(>)
+//    // For example:
+//    jvmToolchain(11)
+//}
+
 repositories {
     mavenCentral()
 }
@@ -27,14 +38,14 @@ gradlePlugin {
 
     website = 'https://github.com/xiaxiayige'
     vcsUrl = 'https://github.com/xiaxiayige/androidManifestPermissionChecker.git'
-    
+
     plugins {
         create("verifyManifestPermission") {
             id = "${group}.plugin.verifyManifest"
             displayName = 'VerifyManifestPermissionPlugin'
             description = ' check mainfeest is exist blackPermissions'
             implementationClass = 'com.xiaxiayige.plugin.VerifyManifestPermissionPlugin'
-            tags.addAll("release")
+            tags.addAll("1.0.1-SNAPSHOT")
         }
     }
 }
