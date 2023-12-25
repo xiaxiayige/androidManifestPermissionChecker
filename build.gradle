@@ -1,38 +1,40 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+    id "org.jetbrains.kotlin.jvm" version "1.7.22"
     id 'java'
     id 'java-gradle-plugin'
     id 'maven-publish'
-    id 'com.gradle.plugin-publish' version '0.18.0'
+    id "com.gradle.plugin-publish" version "1.2.1"
 }
 
 
 group 'io.github.xiaxiayige'
 version '1.0.0'
 
-pluginBundle {
-    website = 'https://github.com/xiaxiayige'
-    vcsUrl = 'https://github.com/xiaxiayige/androidManifestPermissionChecker'
-    tags = ['0.0.1']
+publishing {
+    repositories {
+        maven {
+            name = 'localPluginRepository'
+            url = 'D:/plugin'
+        }
+    }
 }
 
-//
-//publishing {
-//    repositories {
-//        maven {
-//            name = 'localPluginRepository'
-//            url = 'D:/plugin'
-//        }
-//    }
-//}
+repositories {
+    mavenCentral()
+}
 
 gradlePlugin {
+
+    website = 'https://github.com/xiaxiayige'
+    vcsUrl = 'https://github.com/xiaxiayige/androidManifestPermissionChecker.git'
+    
     plugins {
         create("verifyManifestPermission") {
             id = "${group}.plugin.verifyManifest"
             displayName = 'VerifyManifestPermissionPlugin'
             description = ' check mainfeest is exist blackPermissions'
             implementationClass = 'com.xiaxiayige.plugin.VerifyManifestPermissionPlugin'
+            tags.addAll("release")
         }
     }
 }
@@ -44,10 +46,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.21'
-    implementation "com.android.tools.build:gradle:4.0.2"
-    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
-    runtimeOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.6.21")
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.20'
+    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20"
+    implementation "com.android.tools.build:gradle:7.4.0"
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
+//    runtimeOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.8.21")
 
 }

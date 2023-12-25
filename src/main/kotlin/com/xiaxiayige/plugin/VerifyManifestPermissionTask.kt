@@ -1,10 +1,6 @@
 package com.xiaxiayige.plugin
 
-import kotlinx.coroutines.*
 import org.gradle.api.DefaultTask
-import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 import java.io.File
@@ -36,10 +32,17 @@ open class VerifyManifestPermissionTask : DefaultTask() {
             project.extensions.findByName(VerifyManifestPermissionExtensions.EXTENSIONS_NAME) as? VerifyManifestPermissionExtensions
 
         val fileName = Tool.getAnalyzeFileName(project, variantName)
+        //原始文件文本内容
+        val mergedManifestXmlText = Tool.mergedManifestXmlText(project, variantName)
+
+        println("mergedManifestXmlText ===> ${mergedManifestXmlText}")
+        if (mergedManifestXmlText.isNullOrEmpty()) {
+            throw VerifyPermissionException("$fileName file not found for mergedManifestXmlText method")
+        }
 
         verifyManifestPermissionExtensions?.blackPermissionList?.let {
             if (it.isNotEmpty()) {
-                checkBlacklistPermissions(fileName, it)
+                checkBlacklistPermissions(mergedManifestXmlText, fileName, it)
             }
         }
     }
@@ -47,7 +50,11 @@ open class VerifyManifestPermissionTask : DefaultTask() {
     /**
      * 检查黑名单权限
      */
-    private fun checkBlacklistPermissions(fileName: String, blackPermissions: ArrayList<String>) {
+    private fun checkBlacklistPermissions(
+        mergedManifestXmlText: String,
+        fileName: String,
+        blackPermissions: ArrayList<String>
+    ) {
         val manifestLogging = getManifestLogging(fileName)
 
         if (manifestLogging.isEmpty()) {
@@ -56,7 +63,8 @@ open class VerifyManifestPermissionTask : DefaultTask() {
             //查找所有权限
             val allPermissionList = findAllPermission(manifestLogging)
             //过滤出存在的黑名单权限
-            val findPermissionResultList = filterBlackPermission(blackPermissions, allPermissionList)
+            val findPermissionResultList =
+                filterBlackPermission(mergedManifestXmlText, blackPermissions, allPermissionList)
             //
             if (findPermissionResultList.isNotEmpty()) {
                 val logTextList = getErrorSource(findPermissionResultList, manifestLogging)
@@ -69,14 +77,16 @@ open class VerifyManifestPermissionTask : DefaultTask() {
      * 过滤查找黑名单权限那你
      */
     private fun filterBlackPermission(
+        mergedManifestXmlText: String,
         blackPermissions: ArrayList<String>, allPermissionList: List<String>
     ): ArrayList<String> {
         val findPermissionResultList = arrayListOf<String>()
         blackPermissions.forEach { blackPermission ->
-            allPermissionList.forEach { permission ->
-                val item = permission.replace(PREFIX_TAG, "")
-                if (blackPermission == item) {
-                    findPermissionResultList.add(permission)
+            allPermissionList.forEach { needVerifyPermission ->
+                val item = needVerifyPermission.replace(PREFIX_TAG, "")
+                //如果mergedManifestXmlText 包含黑名单权限 则添加到结果中
+                if (blackPermission == item && mergedManifestXmlText.contains(blackPermission)) {
+                    findPermissionResultList.add(needVerifyPermission)
                 }
             }
         }
@@ -94,7 +104,6 @@ open class VerifyManifestPermissionTask : DefaultTask() {
         } else {
             arrayListOf()
         }
-
     }
 
     /**
