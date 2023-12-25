@@ -21,4 +21,9 @@ open class VerifyManifestPermissionExtensions {
      * 构建类型
      */
     var productFlavor: String? = null
+
+    /**
+     * 是否开启
+     */
+    var enable = false
 }

@@ -23,18 +23,11 @@ object Tool {
         return "${project.buildDir.absoluteFile}/outputs/logs/manifest-merger-${variantPath}-report.txt"
     }
 
-    fun mergedManifestXmlText(project: Project, variantName: String): String {
-        val verifyManifestPermissionExtensions =
-            project.extensions.findByName(VerifyManifestPermissionExtensions.EXTENSIONS_NAME) as? VerifyManifestPermissionExtensions
-        //googleDebug or xiaomi
-        val productFlavor = verifyManifestPermissionExtensions?.productFlavor?.toLowerCase() ?: ""
-        //variant.name = googleDebug
-        val flavor = variantName.toLowerCase().replace(productFlavor, "")
-        //变体路径
-        val variantPath = if (productFlavor.isEmpty()) flavor else "$productFlavor-$flavor"
+    fun getProjectdManifestXmlText(project: Project): List<String> {
         val filePath =
-            "${project.buildDir.absoluteFile}/intermediates/merged_manifests/${variantPath}/AndroidManifest.xml"
-        return getManifestText(filePath).joinToString(",")
+            "${project.projectDir.absolutePath}/src/main/AndroidManifest.xml"
+        println("AndroidManifest project.filePath = [${filePath}]")
+        return getManifestText(filePath)
     }
 
     private fun getManifestText(fileName: String): List<String> {

@@ -31,18 +31,16 @@ open class VerifyManifestPermissionTask : DefaultTask() {
         val verifyManifestPermissionExtensions =
             project.extensions.findByName(VerifyManifestPermissionExtensions.EXTENSIONS_NAME) as? VerifyManifestPermissionExtensions
 
-        val fileName = Tool.getAnalyzeFileName(project, variantName)
-        //原始文件文本内容
-        val mergedManifestXmlText = Tool.mergedManifestXmlText(project, variantName)
+        if (verifyManifestPermissionExtensions?.enable == true) {
 
-        println("mergedManifestXmlText ===> ${mergedManifestXmlText}")
-        if (mergedManifestXmlText.isNullOrEmpty()) {
-            throw VerifyPermissionException("$fileName file not found for mergedManifestXmlText method")
-        }
-
-        verifyManifestPermissionExtensions?.blackPermissionList?.let {
-            if (it.isNotEmpty()) {
-                checkBlacklistPermissions(mergedManifestXmlText, fileName, it)
+            val fileName = Tool.getAnalyzeFileName(project, variantName)
+            //原始文件文本内容
+            val mergedManifestXmlText = Tool.getProjectdManifestXmlText(project)
+            
+            verifyManifestPermissionExtensions.blackPermissionList.let {
+                if (it.isNotEmpty()) {
+                    checkBlacklistPermissions(mergedManifestXmlText, fileName, it)
+                }
             }
         }
     }
@@ -51,7 +49,7 @@ open class VerifyManifestPermissionTask : DefaultTask() {
      * 检查黑名单权限
      */
     private fun checkBlacklistPermissions(
-        mergedManifestXmlText: String,
+        mergedManifestXmlText: List<String>,
         fileName: String,
         blackPermissions: ArrayList<String>
     ) {
@@ -77,7 +75,7 @@ open class VerifyManifestPermissionTask : DefaultTask() {
      * 过滤查找黑名单权限那你
      */
     private fun filterBlackPermission(
-        mergedManifestXmlText: String,
+        mergedManifestXmlText: List<String>,
         blackPermissions: ArrayList<String>, allPermissionList: List<String>
     ): ArrayList<String> {
         val findPermissionResultList = arrayListOf<String>()
@@ -85,8 +83,19 @@ open class VerifyManifestPermissionTask : DefaultTask() {
             allPermissionList.forEach { needVerifyPermission ->
                 val item = needVerifyPermission.replace(PREFIX_TAG, "")
                 //如果mergedManifestXmlText 包含黑名单权限 则添加到结果中
-                if (blackPermission == item && mergedManifestXmlText.contains(blackPermission)) {
-                    findPermissionResultList.add(needVerifyPermission)
+                if (blackPermission == item) {
+                    //检测是否声明了remove属性
+                    val isExist = mergedManifestXmlText.any {
+                        it.contains(blackPermission, true) && it.contains(
+                            """node="remove"""".trimIndent(),
+                            true
+                        )
+                    }
+                    if (!isExist) {
+                        findPermissionResultList.add(needVerifyPermission)
+                    } else {
+                        println("Skip permission Check ===> [${blackPermission}]")
+                    }
                 }
             }
         }
